@@ -1,0 +1,21 @@
+name: NetGuard IaC Security Scan
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  netguard-scan:
+    name: NetGuard Security Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: NetGuard scan placeholder
+        run: echo "NetGuard scan will run here"
+        env:
+          NETGUARD_API_URL: ${{ secrets.NETGUARD_API_URL }}
