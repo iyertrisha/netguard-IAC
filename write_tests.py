@@ -1,4 +1,4 @@
-"""
+content = '''"""
 Unit tests for all 11 deterministic security rules.
 Each rule has:
   - one test where it FIRES (dangerous config)
@@ -224,3 +224,9 @@ def test_partial_tags_fires():
 def test_all_tags_present_no_fire():
     r = make_resource(tags={"environment": "prod", "owner": "mohit", "project": "netguard"})
     assert check_missing_tags(r) is None
+'''
+
+with open("tests/risk_scorer/test_rules.py", "w", encoding="utf-8") as f:
+    f.write(content)
+
+print("Done! File written successfully.")
