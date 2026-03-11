@@ -1,4 +1,4 @@
-"""
+content = '''"""
 End-to-end tests for POST /score endpoint.
 Tests the full pipeline as a black box — sends real HTTP requests
 to the FastAPI app and verifies the complete response structure.
@@ -188,3 +188,9 @@ def test_no_graph_context_is_new_false():
     findings = response.json()["findings"]
     for f in findings:
         assert f["is_new"] is False
+'''
+
+with open("tests/risk_scorer/test_e2e.py", "w", encoding="utf-8") as f:
+    f.write(content)
+
+print("Done! E2E test file written successfully.")
