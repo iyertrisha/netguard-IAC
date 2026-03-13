@@ -1,4 +1,4 @@
-"""
+content = '''"""
 Prompt builder for GPT-4o LLM calls.
 Constructs system + user prompts for each security finding.
 No API key needed here — this just builds strings.
@@ -8,11 +8,15 @@ from typing import Optional
 from ..schemas import Finding, Resource, GraphContext
 
 
-SYSTEM_PROMPT = """You are a senior cloud security engineer specializing in Infrastructure-as-Code security analysis. You review security findings in Terraform and Kubernetes configurations and provide clear, actionable guidance.
+SYSTEM_PROMPT = """You are a senior cloud security engineer specializing in \
+Infrastructure-as-Code security analysis. You review security findings in \
+Terraform and Kubernetes configurations and provide clear, actionable guidance.
 
-You will be given a security finding detected by a rule-based scanner. Your job is to enrich it with deeper context.
+You will be given a security finding detected by a rule-based scanner. \
+Your job is to enrich it with deeper context.
 
-You MUST respond with a valid JSON object and nothing else. No markdown, no explanation outside the JSON. The JSON must have exactly these fields:
+You MUST respond with a valid JSON object and nothing else. No markdown, \
+no explanation outside the JSON. The JSON must have exactly these fields:
 
 {
   "explanation": "Clear 2-3 sentence explanation of why this is dangerous",
@@ -59,7 +63,8 @@ def build_finding_prompt(
 
 {graph_section}
 
-Provide your analysis as a JSON object with the fields: explanation, blast_radius, remediation, confidence_adjustment."""
+Provide your analysis as a JSON object with the fields: \
+explanation, blast_radius, remediation, confidence_adjustment."""
 
     return {
         "system": SYSTEM_PROMPT,
@@ -73,7 +78,7 @@ def _build_graph_section(
 ) -> str:
     """Builds the graph context section of the prompt if available."""
     if not graph_context:
-        return "## Graph Context\nNo graph context available."
+        return "## Graph Context\\nNo graph context available."
 
     lines = ["## Graph Context"]
 
@@ -106,7 +111,7 @@ def _build_graph_section(
     else:
         lines.append("No connected resources found in graph.")
 
-    return "\n".join(lines)
+    return "\\n".join(lines)
 
 
 def _safe_resource_props(resource: Resource) -> dict:
@@ -132,3 +137,9 @@ def _safe_resource_props(resource: Resource) -> dict:
         "properties": safe_props,
         "tags": resource.tags,
     }
+'''
+
+with open("services/risk_scorer/llm/prompt_builder.py", "w", encoding="utf-8") as f:
+    f.write(content)
+
+print("Done! prompt_builder.py written successfully.")
